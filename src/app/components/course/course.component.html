@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="description-container">
+        <p class="title">{{ course.title }}</p>
+        <p>{{ course.description }}</p>
+        <p>Длительность: {{ course.duration.weeks }} недель</p>
+        <p>
+            Цена: <span class="price">{{ course.price }}</span>
+        </p>
+    </div>
+    <div class="actions">
+        <button class="button">Изменить</button>
+        <button class="button">Удалить</button>
+    </div>
+</div>
