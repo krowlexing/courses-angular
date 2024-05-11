@@ -1,9 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../data/Course';
 import { DataService } from './DataService';
+import { PersistanceService } from './PersistanceService';
+
+const persistanceKey = 'courses';
 
 @Injectable({ providedIn: 'root' })
 export class CoursesService extends DataService<Course, Omit<Course, 'id'>> {
+    constructor(private persistance: PersistanceService) {
+        super();
+
+        const savedCourses = persistance.load<Course[]>(persistanceKey) ?? [];
+
+        this.valuesSubject.next(savedCourses);
+
+        this.valuesSubject.subscribe((values) => {
+            this.persistance.store(persistanceKey, values);
+        });
+    }
+
     defaultCourses(): Course[] {
         return [
             {
