@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DataService<T extends { id: number }, NewT extends Omit<T, 'id'>> {
@@ -34,6 +34,16 @@ export class DataService<T extends { id: number }, NewT extends Omit<T, 'id'>> {
             newValues.push(updatedValue);
             this.valuesSubject.next(newValues);
         }
+    }
+
+    byId(id: number): T | undefined {
+        return this.valuesSubject.value.find((v) => v.id === id);
+    }
+
+    observeById(id: number): Observable<T | undefined> {
+        return this.valuesSubject.pipe(
+            map((values) => values.find((v) => v.id === id))
+        );
     }
 
     remove(valueId: number) {
