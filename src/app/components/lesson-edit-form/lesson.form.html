@@ -1,0 +1,48 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <div>
+            Title:
+            <label>
+                <input
+                    name="title"
+                    type="text"
+                    formControlName="title"
+                    required
+                />
+            </label>
+        </div>
+        <div>
+            Description:
+            <label>
+                <input
+                    name="description"
+                    type="text"
+                    formControlName="description"
+                />
+            </label>
+        </div>
+        <div>
+            Price:
+            <label>
+                <input name="date" type="string" formControlName="date" />
+            </label>
+        </div>
+        <div>
+            <label>
+                Attachments
+                <div
+                    *ngFor="let item of form.controls.attachments.controls; let i = index"
+                >
+                    <div [formGroup]="item">
+                        {{ i }}
+                        <input name="url" type="string" formControlName="url" />
+                    </div>
+                    <button (click)="removeAttachment(i)">-</button>
+                </div>
+            </label>
+            <button (click)="addAttachment()">+</button>
+        </div>
+    </div>
+    <div>lesson value: {{ stringValue() }}</div>
+    <input type="submit" value="Submit" [disabled]="form.invalid" />
+</form>

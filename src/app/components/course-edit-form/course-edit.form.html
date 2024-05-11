@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <div>
+            Title:
+            <label>
+                <input
+                    name="title"
+                    type="text"
+                    formControlName="title"
+                    required
+                />
+            </label>
+        </div>
+        <div>
+            Description:
+            <label>
+                <input
+                    name="description"
+                    type="text"
+                    formControlName="description"
+                />
+            </label>
+        </div>
+        <div>
+            Price:
+            <label>
+                <input name="price" type="number" formControlName="price" />
+            </label>
+        </div>
+        <div>
+            Duration:
+            <label>
+                <input
+                    name="duration"
+                    type="number"
+                    formControlName="duration"
+                />
+            </label>
+        </div>
+        <div style="background: darkgray">
+            Lessons:
+            <div *ngFor="let lesson of lessons; let i = index">
+                <lesson-edit-form />
+                <button type="button" (click)="removeLesson(i)">-</button>
+            </div>
+
+            <button type="button" (click)="onAddLesson()">+ Lesson</button>
+        </div>
+    </div>
+    <input type="submit" value="Submit" [disabled]="form.invalid" />
+</form>
