@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../../data/Course';
 
 @Component({
@@ -12,6 +12,10 @@ export class CourseComponent {
     @Input()
     course!: Course;
 
-    x: number = 124;
-    JSON = JSON;
+    @Output()
+    onEditClick = new EventEmitter<Course>();
+
+    editClick() {
+        this.onEditClick.emit(this.course);
+    }
 }
