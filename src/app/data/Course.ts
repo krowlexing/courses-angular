@@ -1,5 +1,4 @@
-export type Course = {
-    id: number;
+export type NewCourse = {
     title: string;
     description: string;
     duration: CourseDuration;
@@ -7,16 +6,19 @@ export type Course = {
     lessons: Lesson[];
 };
 
+export type Course = Id & NewCourse;
+
 export type CourseDuration = {
     weeks: number;
 };
-
-export type Lesson = {
+export type NewLesson = {
     title: string;
     description: string;
     publicationDate: Date;
     attachments: LessonAttachment[];
 };
+
+export type Lesson = Id & NewLesson;
 
 export type LessonAttachment = {
     type: 'file' | 'image';
@@ -28,4 +30,8 @@ export type Student = {
     lastName: string;
     email: string;
     courses: Course[];
+};
+
+type Id = {
+    id: number;
 };
