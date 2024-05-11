@@ -13,9 +13,23 @@ export class CourseComponent {
     course!: Course;
 
     @Output()
-    onEditClick = new EventEmitter<Course>();
+    editClick = new EventEmitter<Course>();
 
-    editClick() {
-        this.onEditClick.emit(this.course);
+    @Output()
+    moreClick = new EventEmitter<Course>();
+
+    @Output()
+    deleteClick = new EventEmitter<Course>();
+
+    onEditClick() {
+        this.editClick.emit(this.course);
+    }
+
+    onMoreClick() {
+        this.moreClick.emit(this.course);
+    }
+
+    onDeleteClick() {
+        this.deleteClick.emit(this.course);
     }
 }
