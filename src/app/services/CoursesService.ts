@@ -11,7 +11,13 @@ export class CoursesService extends DataService<Course, Omit<Course, 'id'>> {
         super();
 
         const savedCourses = persistance.load<Course[]>(persistanceKey) ?? [];
+        const maxId =
+            savedCourses.reduce(
+                (bestId, course) => Math.max(bestId, course.id),
+                1
+            ) + 1;
 
+        this.setIdCounter(maxId);
         this.valuesSubject.next(savedCourses);
 
         this.valuesSubject.subscribe((values) => {

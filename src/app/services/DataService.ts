@@ -9,6 +9,10 @@ export class DataService<T extends { id: number }, NewT extends Omit<T, 'id'>> {
 
     valuesSubject = new BehaviorSubject<T[]>([]);
 
+    setIdCounter(counter: number) {
+        this.taskCounter = counter;
+    }
+
     values(): Observable<T[]> {
         return this.valuesSubject;
     }
