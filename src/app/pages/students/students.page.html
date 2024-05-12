@@ -1,6 +1,10 @@
 студентики
 <div *ngFor="let student of students;">
-    <student [student]="student" />
+    <student
+        [student]="student"
+        (deleteClick)="onDelete($event)"
+        (updateClick)="onUpdate($event)"
+    />
 </div>
 
 <button (click)="addStudent()">+</button>

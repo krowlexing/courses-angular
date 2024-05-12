@@ -40,4 +40,12 @@ export class StudentsPage {
     addStudent() {
         this.router.navigateByUrl(`/students/add`);
     }
+
+    onDelete(student: Student) {
+        this.studentService.remove(student.id);
+    }
+
+    onUpdate(student: Student) {
+        this.router.navigateByUrl(`/students/${student.id}/edit`);
+    }
 }
