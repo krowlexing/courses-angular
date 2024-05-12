@@ -5,10 +5,20 @@ import { NgFor } from '@angular/common';
 import { CourseComponent } from '../../components/course/course.component';
 import { Course } from '../../data/Course';
 import { Location } from '@angular/common';
+import { CourseButtonBlock } from '../../components/course-button-block/course-button-block.component';
+import { LessonsComponent } from '../../components/lessons/lessons.component';
 
 @Component({
     templateUrl: './main.page.html',
-    imports: [RouterOutlet, NgFor, CourseComponent],
+    styles: `
+    `,
+    imports: [
+        RouterOutlet,
+        NgFor,
+        CourseComponent,
+        CourseButtonBlock,
+        LessonsComponent,
+    ],
     standalone: true,
 })
 export class MainPage {
@@ -31,7 +41,13 @@ export class MainPage {
         this.router.navigateByUrl(`/course/${course.id}/edit`);
     }
 
+    onDeleteClick(course: Course) {}
+
     addDefaultCourse() {
         this.coursesService.push(this.coursesService.defaultCourses()[0]);
+    }
+
+    studentsClick() {
+        this.router.navigateByUrl(`/students`);
     }
 }

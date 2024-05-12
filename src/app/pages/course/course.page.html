@@ -1,1 +1,10 @@
-<course [course]="course" />
+<course [course]="course">
+    <div lessons>
+        <div>Уроки</div>
+        <lessons [lessons]="course.lessons" />
+    </div>
+
+    <div actions>
+        <button (click)="onEditClick()">edit</button>
+    </div>
+</course>

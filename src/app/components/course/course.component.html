@@ -7,9 +7,8 @@
             Цена: <span class="price">{{ course.price }}</span>
         </p>
     </div>
-    <div class="actions">
-        <button class="button" (click)="onMoreClick()">Подробнее</button>
-        <button class="button" (click)="onEditClick()">Изменить</button>
-        <button class="button" (click)="onDeleteClick()">Удалить</button>
+    <div>
+        <ng-content select="[lessons]" />
+        <ng-content select="[actions]" />
     </div>
 </div>

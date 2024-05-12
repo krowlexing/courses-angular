@@ -1,11 +1,14 @@
 <div>courses: {{ courses.length }}</div>
+<button (click)="studentsClick()">students</button>
 <div class="course-container">
-    <course
-        *ngFor="let course of courses"
-        [course]="course"
-        (editClick)="onEditClick($event)"
-        (moreClick)="onMoreClick($event)"
-    />
+    <course *ngFor="let course of courses" [course]="course">
+        <course-button-block
+            actions
+            (moreClick)="onMoreClick(course)"
+            (editClick)="onEditClick(course)"
+            (deleteClick)="onDeleteClick(course)"
+        />
+    </course>
 </div>
 <div>
     <button (click)="addDefaultCourse()">+</button>

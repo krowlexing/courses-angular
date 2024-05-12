@@ -1,13 +1,14 @@
 import { Component, EventEmitter } from '@angular/core';
 import { CoursesService } from '../../services/CoursesService';
 import { CourseComponent } from '../../components/course/course.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../../data/Course';
 import { combineLatest } from 'rxjs';
+import { LessonsComponent } from '../../components/lessons/lessons.component';
 
 @Component({
     templateUrl: './course.page.html',
-    imports: [CourseComponent],
+    imports: [CourseComponent, LessonsComponent],
     standalone: true,
 })
 export class CoursePage {
@@ -15,6 +16,7 @@ export class CoursePage {
 
     constructor(
         private courseService: CoursesService,
+        private router: Router,
         private route: ActivatedRoute
     ) {
         combineLatest([route.params, courseService.values()]).subscribe(
@@ -24,5 +26,9 @@ export class CoursePage {
                 console.log(this.course);
             }
         );
+    }
+
+    onEditClick() {
+        this.router.navigateByUrl(`course/${this.course.id}/edit`);
     }
 }
