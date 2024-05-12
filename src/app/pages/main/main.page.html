@@ -1,6 +1,9 @@
 <div>courses: {{ courses.length }}</div>
 <button (click)="studentsClick()">students</button>
 <div class="course-container">
+    <div>
+        <button (click)="addCourse()">+ курс</button>
+    </div>
     <course *ngFor="let course of courses" [course]="course">
         <course-button-block
             actions
@@ -9,7 +12,4 @@
             (deleteClick)="onDeleteClick(course)"
         />
     </course>
-</div>
-<div>
-    <button (click)="addDefaultCourse()">+</button>
 </div>

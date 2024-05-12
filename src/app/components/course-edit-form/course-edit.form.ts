@@ -41,7 +41,6 @@ export class CourseEditForm implements OnChanges {
     form = CourseEditForm.formGroup(this.formBuilder);
 
     forms: ReturnType<typeof LessonForm.formGroup>[] = [];
-    lessons: (NewLesson | null)[] = [];
 
     static formGroup(formBuilder: FormBuilder) {
         return formBuilder.nonNullable.group({
@@ -53,16 +52,19 @@ export class CourseEditForm implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        const initialState = changes['initialState'].currentValue as Course;
-        const { id, lessons, ...requiredOnly } = initialState;
+        const initialStateChanges = changes['initialState'];
+        if (initialStateChanges && initialStateChanges.currentValue) {
+            const initialState = changes['initialState'].currentValue as Course;
+            const { id, lessons, ...requiredOnly } = initialState;
 
-        const initialFormState = {
-            ...requiredOnly,
-            duration: initialState.duration.weeks,
-        };
+            const initialFormState = {
+                ...requiredOnly,
+                duration: initialState.duration.weeks,
+            };
 
-        this.form.setValue(initialFormState);
-        this.initLessonsSubforms(initialState);
+            this.form.setValue(initialFormState);
+            this.initLessonsSubforms(initialState);
+        }
     }
 
     initLessonsSubforms(initialState: Course) {
@@ -104,12 +106,11 @@ export class CourseEditForm implements OnChanges {
     }
 
     onAddLesson() {
-        this.lessons.push(null);
         this.forms.push(LessonForm.formGroup(this.formBuilder));
     }
 
     removeLesson(index: number) {
-        this.lessons = this.lessons.filter((_, i) => i !== index);
+        this.forms = this.forms.filter((_, i) => i !== index);
     }
 
     debugText() {

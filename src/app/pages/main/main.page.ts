@@ -43,8 +43,8 @@ export class MainPage {
 
     onDeleteClick(course: Course) {}
 
-    addDefaultCourse() {
-        this.coursesService.push(this.coursesService.defaultCourses()[0]);
+    addCourse() {
+        this.router.navigateByUrl(`/course/add`);
     }
 
     studentsClick() {
