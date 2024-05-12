@@ -20,15 +20,19 @@ export class DataService<T extends { id: number }, NewT extends Omit<T, 'id'>> {
         ]);
     }
 
+    onUpdate(value: T): T {
+        return value;
+    }
+
     update(valueId: number, newValue: NewT) {
         const values = this.valuesSubject.value;
         const foundValueIndex = values.findIndex((task) => task.id === valueId);
 
         if (foundValueIndex !== -1) {
-            const updatedValue = {
+            const updatedValue = this.onUpdate({
                 ...values[foundValueIndex],
                 ...newValue,
-            };
+            });
 
             const newValues: T[] = values.filter((task) => task.id !== valueId);
             newValues.push(updatedValue);

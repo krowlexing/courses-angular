@@ -3,10 +3,10 @@ export type NewCourse = {
     description: string;
     duration: CourseDuration;
     price: number;
-    lessons: Lesson[];
+    lessons: NewLesson[];
 };
 
-export type Course = Id & NewCourse;
+export type Course = Id & Omit<NewCourse, 'lessons'> & { lessons: Lesson[] };
 
 export type CourseDuration = {
     weeks: number;
@@ -18,20 +18,29 @@ export type NewLesson = {
     attachments: LessonAttachment[];
 };
 
-export type Lesson = Id & NewLesson;
+export type Lesson = NewLesson;
 
 export type LessonAttachment = {
-    type: 'file' | 'image';
     url: string;
 };
 
 export type Student = {
+    id: number;
     firstName: string;
     lastName: string;
     email: string;
-    courses: Course[];
+    courses: Id[];
 };
 
-type Id = {
+export type CourseReference = Id;
+
+export type NewStudent = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    courses: Id[];
+};
+
+export type Id = {
     id: number;
 };
