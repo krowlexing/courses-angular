@@ -7,6 +7,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import {
+    Form,
     FormBuilder,
     FormControl,
     FormGroup,
@@ -29,21 +30,28 @@ export class LessonForm implements OnChanges {
     @Input()
     initialState: Lesson | undefined;
 
-    form = this.formBuilder.nonNullable.group({
-        title: ['', Validators.required],
-        description: ['', Validators.required],
-        date: ['', Validators.required],
+    @Input()
+    form = LessonForm.formGroup(this.formBuilder);
 
-        attachments: this.formBuilder.array<
-            ReturnType<LessonForm['makeAttachmentGroup']>
-        >([]),
-    });
+    static formGroup(formBuilder: FormBuilder) {
+        return formBuilder.nonNullable.group({
+            title: ['', Validators.required],
+            description: ['', Validators.required],
+            date: ['', Validators.required],
+
+            attachments: formBuilder.array<
+                ReturnType<typeof LessonForm.makeAttachmentGroup>
+            >([]),
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
-        const initialState = changes['initialState'].currentValue as Lesson;
+        if (changes['initialState']) {
+            const initialState = changes['initialState'].currentValue as Lesson;
 
-        const formModel = this.dataToFormModel(initialState);
-        this.form.setValue(formModel);
+            const formModel = LessonForm.dataToFormModel(initialState);
+            this.form.setValue(formModel);
+        }
     }
 
     @Output()
@@ -64,33 +72,55 @@ export class LessonForm implements OnChanges {
         // }
     }
 
-    makeAttachmentGroup() {
-        return this.formBuilder.nonNullable.group({
+    static makeAttachmentGroup<T>(formBuilder: FormBuilder) {
+        return formBuilder.nonNullable.group({
             url: ['', Validators.required],
         });
     }
 
     addAttachment() {
-        this.form.controls.attachments.push(this.makeAttachmentGroup());
+        this.form.controls.attachments.push(
+            LessonForm.makeAttachmentGroup(this.formBuilder)
+        );
     }
 
     removeAttachment(i: number) {
         this.form.controls.attachments.removeAt(i);
     }
 
-    dataToFormModel(data: NewLesson) {
+    static dataToFormModel(data: NewLesson) {
         const { title, description } = data;
 
         const attachments = data.attachments.map((attachment) => {
             return { url: attachment.url };
         });
-        const date = data.publicationDate.toString();
+        const date = data.publicationDate
+            ? data.publicationDate.toString()
+            : new Date().toLocaleString();
 
         return {
             title,
             description,
             attachments,
             date,
+        };
+    }
+
+    static formModelToData(model: LessonForm['form']['value']): NewLesson {
+        const { title, description, date, attachments } = model;
+
+        if (!title || !description || !date || attachments == null) {
+            throw new Error('??');
+        }
+
+        const publicationDate = new Date(date);
+        return {
+            title,
+            description,
+            publicationDate,
+            attachments: attachments.map((a) => {
+                return { url: a.url! };
+            }),
         };
     }
 

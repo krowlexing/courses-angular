@@ -43,6 +43,5 @@
             <button (click)="addAttachment()">+</button>
         </div>
     </div>
-    <div>lesson value: {{ stringValue() }}</div>
-    <input type="submit" value="Submit" [disabled]="form.invalid" />
+    <ng-content />
 </form>

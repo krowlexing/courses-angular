@@ -39,13 +39,14 @@
         </div>
         <div style="background: darkgray">
             Lessons:
-            <div *ngFor="let lesson of lessons; let i = index">
-                <lesson-edit-form />
+            <div *ngFor="let form of forms; let i = index">
+                <lesson-edit-form [form]="form" />
                 <button type="button" (click)="removeLesson(i)">-</button>
             </div>
 
             <button type="button" (click)="onAddLesson()">+ Lesson</button>
         </div>
+        <div>man {{ debugText() }}</div>
     </div>
     <input type="submit" value="Submit" [disabled]="form.invalid" />
 </form>
