@@ -4,7 +4,9 @@
     <div>
         <button (click)="addCourse()">+ курс</button>
     </div>
+
     <course *ngFor="let course of courses" [course]="course">
+        <div top># {{ course.id }}</div>
         <course-button-block
             actions
             (moreClick)="onMoreClick(course)"
