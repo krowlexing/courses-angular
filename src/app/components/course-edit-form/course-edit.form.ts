@@ -21,6 +21,12 @@ import { LessonForm } from '../lesson-edit-form/lesson.form';
 @Component({
     selector: 'course-edit-form',
     templateUrl: './course-edit.form.html',
+    styles: `
+        textarea {
+            width: 30rem;
+            resize: none;
+        }
+    `,
     imports: [ReactiveFormsModule, FormsModule, LessonForm, CommonModule],
     standalone: true,
 })
@@ -84,7 +90,6 @@ export class CourseEditForm implements OnChanges {
                 .filter((lessonForm) => lessonForm.valid)
                 .map((form) => LessonForm.formModelToData(form.value));
 
-            alert(JSON.stringify(lessons));
             let value = {
                 ...this.form.value,
                 duration: { weeks: this.form.value.duration! },

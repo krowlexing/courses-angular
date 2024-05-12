@@ -16,11 +16,20 @@ import {
     Validators,
 } from '@angular/forms';
 import { Course, Lesson, NewCourse, NewLesson } from '../../data/Course';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, Location, formatDate } from '@angular/common';
 
 @Component({
     selector: 'lesson-edit-form',
     templateUrl: './lesson.form.html',
+    styles: `
+        .container {
+            display: flex;
+            background: white;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+    `,
     imports: [ReactiveFormsModule, CommonModule],
     standalone: true,
 })
@@ -37,7 +46,10 @@ export class LessonForm implements OnChanges {
         return formBuilder.nonNullable.group({
             title: ['', Validators.required],
             description: ['', Validators.required],
-            date: ['', Validators.required],
+            date: [
+                formatDate('2000-01-01', 'yyyy-MM-dd', 'en'),
+                Validators.required,
+            ],
 
             attachments: formBuilder.array<
                 ReturnType<typeof LessonForm.makeAttachmentGroup>
@@ -94,15 +106,13 @@ export class LessonForm implements OnChanges {
         const attachments = data.attachments.map((attachment) => {
             return { url: attachment.url };
         });
-        const date = data.publicationDate
-            ? data.publicationDate.toString()
-            : new Date().toLocaleString();
-
+        const date = data.publicationDate ? data.publicationDate : new Date();
+        const formatedDate = formatDate(date, 'yyyy-MM-dd', 'en');
         return {
             title,
             description,
             attachments,
-            date,
+            date: formatedDate,
         };
     }
 

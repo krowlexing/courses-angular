@@ -1,52 +1,61 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div>
-        <div>
-            Title:
-            <label>
-                <input
-                    name="title"
-                    type="text"
-                    formControlName="title"
-                    required
-                />
-            </label>
-        </div>
-        <div>
-            Description:
-            <label>
-                <input
-                    name="description"
-                    type="text"
-                    formControlName="description"
-                />
-            </label>
-        </div>
-        <div>
-            Price:
-            <label>
-                <input name="price" type="number" formControlName="price" />
-            </label>
-        </div>
-        <div>
-            Duration:
-            <label>
-                <input
-                    name="duration"
-                    type="number"
-                    formControlName="duration"
-                />
-            </label>
-        </div>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Title:</td>
+                    <td>
+                        <textarea
+                            name="title"
+                            type="text"
+                            formControlName="title"
+                        ></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td>
+                        <textarea
+                            name="description"
+                            type="text"
+                            formControlName="description"
+                        ></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Price:</td>
+                    <td>
+                        <input
+                            name="price"
+                            type="number"
+                            formControlName="price"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Duration:</td>
+                    <td>
+                        <input
+                            name="duration"
+                            type="number"
+                            formControlName="duration"
+                        />
+                        недель
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <div style="background: darkgray">
             Lessons:
             <div *ngFor="let form of forms; let i = index">
-                <lesson-edit-form [form]="form" />
+                # {{ i + 1 }}
                 <button type="button" (click)="removeLesson(i)">-</button>
+                <lesson-edit-form [form]="form" />
             </div>
 
             <button type="button" (click)="onAddLesson()">+ Lesson</button>
         </div>
-        <div>man {{ debugText() }}</div>
     </div>
     <input type="submit" value="Submit" [disabled]="form.invalid" />
 </form>

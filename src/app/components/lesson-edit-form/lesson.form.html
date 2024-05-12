@@ -1,46 +1,46 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container">
     <div>
+        <table>
+            <tr>
+                <td>Title:</td>
+                <td>
+                    <input
+                        name="title"
+                        type="text"
+                        formControlName="title"
+                        required
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td>
+                    <input
+                        name="description"
+                        type="text"
+                        formControlName="description"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>Date:</td>
+                <td>
+                    <input name="date" type="date" formControlName="date" />
+                </td>
+            </tr>
+        </table>
+
         <div>
-            Title:
-            <label>
-                <input
-                    name="title"
-                    type="text"
-                    formControlName="title"
-                    required
-                />
-            </label>
-        </div>
-        <div>
-            Description:
-            <label>
-                <input
-                    name="description"
-                    type="text"
-                    formControlName="description"
-                />
-            </label>
-        </div>
-        <div>
-            Price:
-            <label>
-                <input name="date" type="string" formControlName="date" />
-            </label>
-        </div>
-        <div>
-            <label>
-                Attachments
-                <div
-                    *ngFor="let item of form.controls.attachments.controls; let i = index"
-                >
-                    <div [formGroup]="item">
-                        {{ i }}
-                        <input name="url" type="string" formControlName="url" />
-                    </div>
+            <div>Attachments <button (click)="addAttachment()">+</button></div>
+            <div
+                *ngFor="let item of form.controls.attachments.controls; let i = index"
+            >
+                <div [formGroup]="item">
                     <button (click)="removeAttachment(i)">-</button>
+
+                    <input name="url" type="string" formControlName="url" />
                 </div>
-            </label>
-            <button (click)="addAttachment()">+</button>
+            </div>
         </div>
     </div>
     <ng-content />
