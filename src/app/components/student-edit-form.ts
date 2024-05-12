@@ -15,31 +15,41 @@ import { CommonModule, Location } from '@angular/common';
     template: `<form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div>
             <div>
-                <label>
-                    First name:
-                    <input
-                        name="firstName"
-                        type="text"
-                        formControlName="firstName"
-                    />
-                </label>
+                <table>
+                    <tr>
+                        <td>First name:</td>
+                        <td>
+                            <input
+                                name="firstName"
+                                type="text"
+                                formControlName="firstName"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Last name:</td>
+                        <td>
+                            <input
+                                name="lastName"
+                                type="text"
+                                formControlName="lastName"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>email:</td>
+                        <td>
+                            <input
+                                name="email"
+                                type="email"
+                                formControlName="email"
+                            />
+                        </td>
+                    </tr>
+                </table>
+                <label> </label>
             </div>
-            <div>
-                <label>
-                    Last name:
-                    <input
-                        name="lastName"
-                        type="text"
-                        formControlName="lastName"
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    email:
-                    <input name="email" type="email" formControlName="email" />
-                </label>
-            </div>
+
             <div>
                 <label>
                     courses
@@ -50,15 +60,16 @@ import { CommonModule, Location } from '@angular/common';
                         "
                     >
                         <div [formGroup]="item">
-                            <div>#{{ i }}</div>
-                            <div>Id:</div>
+                            <button (click)="removeCourse(i)">-</button>
+                            #{{ i + 1 }}
+
+                            <span>Id:</span>
                             <input
                                 name="id"
                                 type="string"
                                 formControlName="id"
                             />
                         </div>
-                        <button (click)="removeCourse(i)">-</button>
                     </div>
                 </label>
                 <button type="button" (click)="addCourse()">+</button>
@@ -96,6 +107,10 @@ export class StudentForm implements OnChanges {
         if (changes['initialState']) {
             const initialState = changes['initialState']
                 .currentValue as Student;
+
+            for (let course of initialState.courses) {
+                this.form.controls.courses.push(this.courseGroup());
+            }
 
             const formModel = StudentForm.dataToFormModel(initialState);
             this.form.setValue(formModel);
