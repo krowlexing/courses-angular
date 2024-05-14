@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
     MatButton,
     MatIconButton,
@@ -15,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
             *ngIf="buttonType == 'flat'"
             mat-flat-button
             color="{{ color }}"
+            [disabled]="disabled"
             (click)="clickHandler()"
         >
             <mat-icon *ngIf="icon">{{ icon }}</mat-icon> {{ value }}
@@ -24,13 +26,20 @@ import { MatIconModule } from '@angular/material/icon';
             *ngIf="buttonType == undefined"
             color="{{ color }}"
             (click)="(clickHandler)"
+            [disabled]="disabled"
             mat-button
         >
             <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
             {{ value }}
         </button>
     `,
-    imports: [MatButton, MatButtonModule, MatIconModule, CommonModule],
+    imports: [
+        MatButton,
+        MatButtonModule,
+        MatIconModule,
+        CommonModule,
+        ReactiveFormsModule,
+    ],
     standalone: true,
 })
 export class ButtonComponent {
@@ -39,6 +48,9 @@ export class ButtonComponent {
 
     @Input()
     value?: string;
+
+    @Input()
+    disabled?: boolean;
 
     @Input()
     icon?: string;

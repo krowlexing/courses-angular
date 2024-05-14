@@ -69,6 +69,15 @@ export class CourseEditForm implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         const initialStateChanges = changes['initialState'];
+        if (this.initialState || initialStateChanges == undefined) {
+            this.form.setValue({
+                title: ' ',
+                description: ' ',
+                duration: 0,
+                price: 0,
+            });
+            this.form.reset();
+        }
         if (initialStateChanges && initialStateChanges.currentValue) {
             const initialState = changes['initialState'].currentValue as Course;
             const { id, lessons, ...requiredOnly } = initialState;
@@ -84,18 +93,22 @@ export class CourseEditForm implements OnChanges {
     }
 
     initLessonsSubforms(initialState: Course) {
-        const lessons = initialState.lessons;
-        console.log(`lenssons length: ${lessons.length}`);
-        for (let lesson of lessons) {
-            const form = LessonForm.formGroup(this.formBuilder);
-            for (let attachment of lesson.attachments) {
-                form.controls.attachments.push(
-                    AttachmentsComponent.makeAttachmentGroup(this.formBuilder)
-                );
-            }
-            form.setValue(LessonForm.dataToFormModel(lesson));
+        if (initialState != undefined) {
+            const lessons = initialState.lessons;
+            console.log(`lenssons length: ${lessons.length}`);
+            for (let lesson of lessons) {
+                const form = LessonForm.formGroup(this.formBuilder);
+                for (let attachment of lesson.attachments) {
+                    form.controls.attachments.push(
+                        AttachmentsComponent.makeAttachmentGroup(
+                            this.formBuilder
+                        )
+                    );
+                }
+                form.setValue(LessonForm.dataToFormModel(lesson));
 
-            this.forms.push(form);
+                this.forms.push(form);
+            }
         }
     }
 

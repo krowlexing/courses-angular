@@ -24,7 +24,7 @@ import { AppCommonModule } from '../common/common.module';
                 </tr>
             </table>
 
-            <table>
+            <table *ngIf="student.courses.length > 0">
                 <thead>
                     <tr>
                         <td>id</td>

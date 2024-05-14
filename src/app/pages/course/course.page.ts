@@ -10,6 +10,10 @@ import { AppCommonModule } from '../../components/common/common.module';
 @Component({
     templateUrl: './course.page.html',
     styles: `
+
+    .course {
+        min-width: 400px;
+    }
     .container {
         display: flex;
         justify-content: space-around;

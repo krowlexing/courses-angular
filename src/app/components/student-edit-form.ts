@@ -39,7 +39,6 @@ import { AppCommonModule } from './common/common.module';
                         </td>
                     </tr>
                 </table>
-                <label> </label>
             </div>
 
             <div>
@@ -95,15 +94,20 @@ export class StudentForm implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['initialState']) {
-            const initialState = changes['initialState']
-                .currentValue as Student;
+            const initialState = changes['initialState']?.currentValue as
+                | Student
+                | undefined;
 
-            for (let course of initialState.courses) {
-                this.form.controls.courses.push(this.courseGroup());
+            if (initialState != undefined) {
+                for (let course of initialState.courses) {
+                    this.form.controls.courses.push(this.courseGroup());
+                }
+
+                const formModel = StudentForm.dataToFormModel(initialState);
+                this.form.setValue(formModel);
+            } else {
+                this.form.reset();
             }
-
-            const formModel = StudentForm.dataToFormModel(initialState);
-            this.form.setValue(formModel);
         }
     }
 

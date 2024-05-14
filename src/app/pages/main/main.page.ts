@@ -53,7 +53,9 @@ export class MainPage {
         this.router.navigateByUrl(`/course/${course.id}/edit`);
     }
 
-    onDeleteClick(course: Course) {}
+    onDeleteClick(course: Course) {
+        this.coursesService.remove(course.id);
+    }
 
     addCourse() {
         this.router.navigateByUrl(`/course/add`);
