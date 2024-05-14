@@ -1,4 +1,11 @@
-<course-edit-form
-    [initialState]="course"
-    (formSubmitted)="onFormSubmitted($event)"
-/>
+<div class="container">
+    <mat-card>
+        <mat-card-header class="mat-headline-5"> Course </mat-card-header>
+        <mat-divider />
+        <course-edit-form
+            class="course-form"
+            [initialState]="course"
+            (formSubmitted)="onFormSubmitted($event)"
+        />
+    </mat-card>
+</div>

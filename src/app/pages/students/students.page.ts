@@ -9,10 +9,19 @@ import { CourseButtonBlock } from '../../components/course-button-block/course-b
 import { LessonsComponent } from '../../components/lessons/lessons.component';
 import { StudentComponent } from '../../components/student/student.component';
 import { StudentService } from '../../services/StudentService';
+import { AppCommonModule } from '../../components/common/common.module';
 
 @Component({
     templateUrl: './students.page.html',
     styles: `
+    .container {
+        padding: 2rem;
+        display: flex;
+        justify-content: space-around;
+    }
+    .card {
+        padding: 20px;
+    }
     `,
     imports: [
         RouterOutlet,
@@ -20,6 +29,7 @@ import { StudentService } from '../../services/StudentService';
         CourseComponent,
         CourseButtonBlock,
         LessonsComponent,
+        AppCommonModule,
         CommonModule,
         StudentComponent,
     ],

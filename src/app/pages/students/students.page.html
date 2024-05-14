@@ -1,10 +1,19 @@
-студентики
-<div *ngFor="let student of students;">
-    <student
-        [student]="student"
-        (deleteClick)="onDelete($event)"
-        (updateClick)="onUpdate($event)"
-    />
-</div>
+<div class="container">
+    <mat-card class="card">
+        <mat-card-header>
+            <span class="mat-headline-3">студентики</span>
+        </mat-card-header>
 
-<button (click)="addStudent()">+</button>
+        <mat-divider />
+        <div *ngFor="let student of students;">
+            <student
+                [student]="student"
+                (deleteClick)="onDelete($event)"
+                (updateClick)="onUpdate($event)"
+            />
+            <mat-divider />
+        </div>
+
+        <app-button (click)="addStudent()" value="+ student" />
+    </mat-card>
+</div>

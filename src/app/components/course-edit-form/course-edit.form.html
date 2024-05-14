@@ -1,60 +1,62 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div>
         <table>
-            <tbody>
-                <tr>
-                    <td>Title:</td>
-                    <td>
-                        <textarea
-                            name="title"
-                            type="text"
-                            formControlName="title"
-                        ></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description:</td>
-                    <td>
-                        <textarea
-                            name="description"
-                            type="text"
-                            formControlName="description"
-                        ></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Price:</td>
-                    <td>
-                        <input
-                            name="price"
-                            type="number"
-                            formControlName="price"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Duration:</td>
-                    <td>
-                        <input
-                            name="duration"
-                            type="number"
-                            formControlName="duration"
-                        />
-                        недель
-                    </td>
-                </tr>
-            </tbody>
+            <tr>
+                <td>
+                    <app-textarea
+                        label="title"
+                        controlName="title"
+                    ></app-textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <app-textarea
+                        label="Description"
+                        controlName="description"
+                    ></app-textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <app-input controlName="price" label="Price:" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <app-input
+                        label="Duration"
+                        type="number"
+                        controlName="duration"
+                        suffix="недель"
+                    />
+                </td>
+            </tr>
         </table>
 
-        <div style="background: darkgray">
-            Lessons:
+        <div>
+            <span class="mat-h1 lessons-title">Lessons:</span>
             <div *ngFor="let form of forms; let i = index">
-                # {{ i + 1 }}
-                <button type="button" (click)="removeLesson(i)">-</button>
+                <div class="centered-text margin">
+                    <span>#{{ i + 1 }}</span>
+                    <app-fab
+                        class="button-button margin"
+                        color="white"
+                        type="button"
+                        (click)="removeLesson(i)"
+                        icon="remove"
+                    />
+                </div>
                 <lesson-edit-form [form]="form" />
             </div>
-
-            <button type="button" (click)="onAddLesson()">+ Lesson</button>
+            <div>
+                <app-button
+                    type="button"
+                    (click)="handleClick()"
+                    icon="add"
+                    value="Lesson"
+                />
+            </div>
         </div>
     </div>
     <input type="submit" value="Submit" [disabled]="form.invalid" />

@@ -9,12 +9,25 @@ import { CourseEditForm } from '../components/course-edit-form/course-edit.form'
 import { Subscription, combineLatest } from 'rxjs';
 import { StudentService } from '../services/StudentService';
 import { StudentForm } from '../components/student-edit-form';
+import { AppCommonModule } from '../components/common/common.module';
 @Component({
-    imports: [FormsModule, StudentForm],
-    template: `<student-form
-        [initialState]="student"
-        (formSubmitted)="onFormSubmitted($event)"
-    /> `,
+    imports: [FormsModule, StudentForm, AppCommonModule],
+    styles: `
+    .container {
+        margin: 10px;
+        display: flex;
+        justify-content: space-around;
+    }
+    `,
+    template: ` <div class="container">
+        <mat-card>
+            <student-form
+                style="padding: 20px;"
+                [initialState]="student"
+                (formSubmitted)="onFormSubmitted($event)"
+            />
+        </mat-card>
+    </div>`,
     standalone: true,
 })
 export class EditStudentsPage {

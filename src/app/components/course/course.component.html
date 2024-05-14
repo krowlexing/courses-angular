@@ -1,16 +1,24 @@
-<div class="container">
-    <ng-content select="[top]" />
-
-    <div class="description-container">
-        <p class="title">{{ course.title }}</p>
+<mat-card class="container" color="primary">
+    <mat-card-header>
+        <mat-card-title>
+            <span class="mat-headline-3">{{ course.title }}</span>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <span class="mat-headline-5"> <ng-content select="[top]" /> </span
+        ></mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider />
+    <div class="mat-h4 description-container">
         <p>{{ course.description }}</p>
         <p>Длительность: {{ course.duration.weeks }} недель</p>
-        <p>
-            Цена: <span class="price">{{ course.price }}</span>
-        </p>
     </div>
     <div>
         <ng-content select="[lessons]" />
-        <ng-content select="[actions]" />
     </div>
-</div>
+    <p>
+        Цена: <span class="price mat-headline-1">{{ course.price }}</span>
+    </p>
+    <mat-card-actions>
+        <ng-content select="[actions]" />
+    </mat-card-actions>
+</mat-card>

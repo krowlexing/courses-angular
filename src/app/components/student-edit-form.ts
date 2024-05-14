@@ -9,6 +9,7 @@ import {
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Id, NewStudent, Student } from '../data/Course';
 import { CommonModule, Location } from '@angular/common';
+import { AppCommonModule } from './common/common.module';
 
 @Component({
     selector: 'student-form',
@@ -17,33 +18,24 @@ import { CommonModule, Location } from '@angular/common';
             <div>
                 <table>
                     <tr>
-                        <td>First name:</td>
                         <td>
-                            <input
-                                name="firstName"
-                                type="text"
-                                formControlName="firstName"
+                            <app-input
+                                label="first name"
+                                controlName="firstName"
                             />
                         </td>
                     </tr>
                     <tr>
-                        <td>Last name:</td>
                         <td>
-                            <input
-                                name="lastName"
-                                type="text"
-                                formControlName="lastName"
+                            <app-input
+                                label="last name"
+                                controlName="lastName"
                             />
                         </td>
                     </tr>
                     <tr>
-                        <td>email:</td>
                         <td>
-                            <input
-                                name="email"
-                                type="email"
-                                formControlName="email"
-                            />
+                            <app-input label="email" controlName="email" />
                         </td>
                     </tr>
                 </table>
@@ -60,25 +52,23 @@ import { CommonModule, Location } from '@angular/common';
                         "
                     >
                         <div [formGroup]="item">
-                            <button (click)="removeCourse(i)">-</button>
+                            <app-button (click)="removeCourse(i)" value="-" />
                             #{{ i + 1 }}
 
                             <span>Id:</span>
-                            <input
-                                name="id"
-                                type="string"
-                                formControlName="id"
-                            />
+                            <app-input label="id" controlName="id" />
                         </div>
                     </div>
                 </label>
-                <button type="button" (click)="addCourse()">+</button>
+                <div>
+                    <app-button (click)="addCourse()" value="+" />
+                </div>
             </div>
-            <button type="submit">submit</button>
+            <app-button type="submit" value="submit" />
         </div>
         <ng-content />
     </form> `,
-    imports: [ReactiveFormsModule, CommonModule],
+    imports: [ReactiveFormsModule, CommonModule, AppCommonModule],
     standalone: true,
 })
 export class StudentForm implements OnChanges {

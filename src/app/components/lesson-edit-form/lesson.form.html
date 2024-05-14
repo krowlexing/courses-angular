@@ -2,45 +2,24 @@
     <div>
         <table>
             <tr>
-                <td>Title:</td>
                 <td>
-                    <input
-                        name="title"
-                        type="text"
-                        formControlName="title"
-                        required
-                    />
+                    <app-input controlName="title" label="Title:" />
                 </td>
             </tr>
             <tr>
-                <td>Description:</td>
                 <td>
-                    <input
-                        name="description"
-                        type="text"
-                        formControlName="description"
-                    />
+                    <app-input controlName="description" label="Description" />
                 </td>
             </tr>
             <tr>
-                <td>Date:</td>
                 <td>
-                    <input name="date" type="date" formControlName="date" />
+                    <datepicker controlName="date" label="Date" />
                 </td>
             </tr>
         </table>
 
-        <div>
-            <div>Attachments <button (click)="addAttachment()">+</button></div>
-            <div
-                *ngFor="let item of form.controls.attachments.controls; let i = index"
-            >
-                <div [formGroup]="item">
-                    <button (click)="removeAttachment(i)">-</button>
-
-                    <input name="url" type="string" formControlName="url" />
-                </div>
-            </div>
+        <div class="att">
+            <attachments [formControls]="form.controls.attachments" />
         </div>
     </div>
     <ng-content />

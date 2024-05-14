@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { AppCommonModule } from '../common/common.module';
 
 @Component({
     selector: 'course-button-block',
     standalone: true,
-    imports: [],
+    imports: [AppCommonModule],
     template: `
         <div class="actions">
-            <button class="button" (click)="onMoreClick()">Подробнее</button>
-            <button class="button" (click)="onEditClick()">Изменить</button>
-            <button class="button" (click)="onDeleteClick()">Удалить</button>
+            <app-button (click)="onMoreClick()" value="Подробнее" />
+            <app-button (click)="onEditClick()" value="Изменить" />
+            <app-button (click)="onDeleteClick()" value="Удалить" />
         </div>
     `,
     styleUrl: './course-button-block.component.css',

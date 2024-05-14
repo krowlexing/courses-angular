@@ -1,10 +1,12 @@
-<course [course]="course">
-    <div lessons>
-        <div>Уроки</div>
-        <lessons [lessons]="course.lessons" />
-    </div>
+<div class="container">
+    <course [course]="course">
+        <div lessons>
+            <div>Уроки</div>
+            <lessons [lessons]="course.lessons" />
+        </div>
 
-    <div actions>
-        <button (click)="onEditClick()">edit</button>
-    </div>
-</course>
+        <div actions>
+            <app-button (click)="onEditClick()" icon="edit" value="edit" />
+        </div>
+    </course>
+</div>

@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../../data/Course';
-
+import { MatCardModule } from '@angular/material/card';
+import { AppCommonModule } from '../common/common.module';
 @Component({
     selector: 'course',
     standalone: true,
-    imports: [],
+    imports: [MatCardModule, AppCommonModule],
     templateUrl: './course.component.html',
     styleUrl: './course.component.css',
 })

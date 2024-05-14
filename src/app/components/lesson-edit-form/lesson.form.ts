@@ -17,24 +17,59 @@ import {
 } from '@angular/forms';
 import { Course, Lesson, NewCourse, NewLesson } from '../../data/Course';
 import { CommonModule, Location, formatDate } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { provideNativeDateAdapter } from '@angular/material/core';
+
+import { MatInputModule } from '@angular/material/input';
+import { AppCommonModule } from '../common/common.module';
+import { AttachmentsComponent } from '../attachments.component';
 
 @Component({
     selector: 'lesson-edit-form',
     templateUrl: './lesson.form.html',
     styles: `
+        ::ng-deep .text-input-field {
+            width: 30rem;
+        }
+
+        .centered-text {
+            display: flex;
+            align-items: center;
+        }
+
+        .button-button {
+            width: 10px;
+        }
+
+        ::ng-deep .button-button > :first-child {
+            border-radius: 0px !important;
+            height: 1.5rem !important;
+            width: 1.5rem;
+            font-size: 0.5rem !important;
+        }
+
         .container {
             display: flex;
-            background: white;
             padding: 5px;
             margin: 5px;
             border-radius: 5px;
         }
     `,
-    imports: [ReactiveFormsModule, CommonModule],
+    providers: [provideNativeDateAdapter()],
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        AppCommonModule,
+        AttachmentsComponent,
+    ],
     standalone: true,
 })
 export class LessonForm implements OnChanges {
     constructor(private formBuilder: FormBuilder, private location: Location) {}
+
+    date = 'date';
+    description = 'description';
 
     @Input()
     initialState: Lesson | undefined;
@@ -46,13 +81,10 @@ export class LessonForm implements OnChanges {
         return formBuilder.nonNullable.group({
             title: ['', Validators.required],
             description: ['', Validators.required],
-            date: [
-                formatDate('2000-01-01', 'yyyy-MM-dd', 'en'),
-                Validators.required,
-            ],
+            date: ['', Validators.required],
 
             attachments: formBuilder.array<
-                ReturnType<typeof LessonForm.makeAttachmentGroup>
+                ReturnType<typeof AttachmentsComponent.makeAttachmentGroup>
             >([]),
         });
     }
@@ -84,35 +116,21 @@ export class LessonForm implements OnChanges {
         // }
     }
 
-    static makeAttachmentGroup<T>(formBuilder: FormBuilder) {
-        return formBuilder.nonNullable.group({
-            url: ['', Validators.required],
-        });
-    }
-
-    addAttachment() {
-        this.form.controls.attachments.push(
-            LessonForm.makeAttachmentGroup(this.formBuilder)
-        );
-    }
-
-    removeAttachment(i: number) {
-        this.form.controls.attachments.removeAt(i);
-    }
-
     static dataToFormModel(data: NewLesson) {
         const { title, description } = data;
 
         const attachments = data.attachments.map((attachment) => {
             return { url: attachment.url };
         });
-        const date = data.publicationDate ? data.publicationDate : new Date();
-        const formatedDate = formatDate(date, 'yyyy-MM-dd', 'en');
+        let date = data.publicationDate
+            ? new Date(data.publicationDate)
+            : new Date();
+
         return {
             title,
             description,
             attachments,
-            date: formatedDate,
+            date: date.toISOString(),
         };
     }
 

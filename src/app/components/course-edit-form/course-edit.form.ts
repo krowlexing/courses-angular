@@ -8,15 +8,15 @@ import {
 } from '@angular/core';
 import {
     FormBuilder,
-    FormControl,
-    FormGroup,
     FormsModule,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import { Course, Lesson, NewCourse, NewLesson } from '../../data/Course';
+import { Course, NewCourse } from '../../data/Course';
 import { CommonModule, Location } from '@angular/common';
 import { LessonForm } from '../lesson-edit-form/lesson.form';
+import { AppCommonModule } from '../common/common.module';
+import { AttachmentsComponent } from '../attachments.component';
 
 @Component({
     selector: 'course-edit-form',
@@ -26,8 +26,24 @@ import { LessonForm } from '../lesson-edit-form/lesson.form';
             width: 30rem;
             resize: none;
         }
+        .centered-text {
+            display: flex;
+            align-items: center;
+        }
+        .margin {
+            margin: 10px;
+        }
+        .lessons-title {
+            margin: 5px;
+        }
     `,
-    imports: [ReactiveFormsModule, FormsModule, LessonForm, CommonModule],
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        LessonForm,
+        CommonModule,
+        AppCommonModule,
+    ],
     standalone: true,
 })
 export class CourseEditForm implements OnChanges {
@@ -74,7 +90,7 @@ export class CourseEditForm implements OnChanges {
             const form = LessonForm.formGroup(this.formBuilder);
             for (let attachment of lesson.attachments) {
                 form.controls.attachments.push(
-                    LessonForm.makeAttachmentGroup(this.formBuilder)
+                    AttachmentsComponent.makeAttachmentGroup(this.formBuilder)
                 );
             }
             form.setValue(LessonForm.dataToFormModel(lesson));
@@ -105,8 +121,16 @@ export class CourseEditForm implements OnChanges {
         }
     }
 
+    handleClick() {
+        this.onAddLesson();
+    }
+
     onAddLesson() {
-        this.forms.push(LessonForm.formGroup(this.formBuilder));
+        try {
+            this.forms.push(LessonForm.formGroup(this.formBuilder));
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     removeLesson(index: number) {

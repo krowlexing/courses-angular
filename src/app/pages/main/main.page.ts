@@ -7,10 +7,21 @@ import { Course } from '../../data/Course';
 import { Location } from '@angular/common';
 import { CourseButtonBlock } from '../../components/course-button-block/course-button-block.component';
 import { LessonsComponent } from '../../components/lessons/lessons.component';
+import { AppCommonModule } from '../../components/common/common.module';
 
 @Component({
     templateUrl: './main.page.html',
     styles: `
+    .course-container {
+        display: flex;
+        align-items:stretch;
+        flex-wrap: wrap;
+        row-gap: 10px;
+    }
+
+    .course-button {
+        margin: 4px;
+    }
     `,
     imports: [
         RouterOutlet,
@@ -18,6 +29,7 @@ import { LessonsComponent } from '../../components/lessons/lessons.component';
         CourseComponent,
         CourseButtonBlock,
         LessonsComponent,
+        AppCommonModule,
     ],
     standalone: true,
 })

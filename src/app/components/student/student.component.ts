@@ -7,6 +7,7 @@ import { Course, Student } from '../../data/Course';
 import { Location } from '@angular/common';
 import { CourseButtonBlock } from '../../components/course-button-block/course-button-block.component';
 import { LessonsComponent } from '../../components/lessons/lessons.component';
+import { AppCommonModule } from '../common/common.module';
 
 @Component({
     selector: 'student',
@@ -41,8 +42,8 @@ import { LessonsComponent } from '../../components/lessons/lessons.component';
             </table>
         </div>
         <div>
-            <button (click)="onUpdateClick()">update</button>
-            <button (click)="onDeleteClick()">delete</button>
+            <app-button (click)="onUpdateClick()" value="update" />
+            <app-button (click)="onDeleteClick()" value="delete" />
         </div>
     `,
     styles: `
@@ -54,6 +55,7 @@ import { LessonsComponent } from '../../components/lessons/lessons.component';
         CourseButtonBlock,
         LessonsComponent,
         CommonModule,
+        AppCommonModule,
     ],
     standalone: true,
 })
@@ -84,8 +86,6 @@ export class StudentComponent {
     }
 
     courseById(id: number): string {
-        console.log(this.courses);
-        console.log(id);
         const found = this.courses.find((course) => course.id == id);
 
         return found != null ? found.title : 'не найден';
